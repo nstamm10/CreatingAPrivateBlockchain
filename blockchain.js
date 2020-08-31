@@ -66,14 +66,12 @@ class Blockchain {
         return new Promise(async (resolve, reject) => {
             //setting block to a new block with the data in the body
             let blockObj = block;
-            // assigning current height
-            let currentHeight = await getChainHeight();
             //finding the previous block by current chain height
-            const previousBlock = getBlockByHeight(currentHeight);
+            const previousBlock = getBlockByHeight(self.height);
             //assigning hash of previous block to current block
             blockObj.previousBlockHash = previousBlock.hash;
             //assign current height
-            blockObj.height = currentHeight + 1;
+            blockObj.height = self.height + 1;
             //assinging time to block
             blockObj.time = new Date().getTime();
             //hashing the block using SHA256
