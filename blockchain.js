@@ -79,13 +79,9 @@ class Blockchain {
             //hashing the block using SHA256
             blockObj.hash = SHA256(JSON.stringify(block)).toString();
             //checking if the block is valid and resolving by pushing
-            if (block.validate()) {
-                self.height = block.height;
-                self.chain.push(block);
-                resolve(block);
-            } else {
-                reject(new Error(err));
-            }
+            resolve(self.chain.push(blockObj))
+            this.height = blockObj.height;
+            reject(new Error("Block cannot be added"));
         });
     }
 
