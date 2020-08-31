@@ -67,7 +67,7 @@ class Blockchain {
             //setting block to a new block with the data in the body
             let blockObj = block;
             // assigning current height
-            let currentHeight = getChainHeight();
+            let currentHeight = await getChainHeight();
             //finding the previous block by current chain height
             const previousBlock = getBlockByHeight(currentHeight);
             //assigning hash of previous block to current block
