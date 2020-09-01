@@ -204,7 +204,18 @@ class Blockchain {
         let self = this;
         let errorLog = [];
         return new Promise(async (resolve, reject) => {
-
+          self.chain.forEach((block) => {
+            if(block.height === 0) {
+              await block.validate() ? true :
+              errorLog.push('Genesis Block does not validate');
+            } else {
+              await block.validate() ? true :
+              errorLog.push('Block ${block.height} does not validate');
+              block.previousBlockHash === self.chain[block.height - 1] ? true :
+              errorLog.push('Block ${block.height} previous hash does not validate');
+            }
+          });
+          resolve(errorLog);
         });
     }
 
