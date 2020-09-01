@@ -130,8 +130,8 @@ class Blockchain {
             let verified = bitcoinMessage.verify(message,address,signature);
 
             if (underFiveMin && verified) {
-              let block = new Block(star);
-              _addBlock(block);
+              let block = new Block({data: {"star":star, "owner":address}});
+              await this._addBlock(block);
               resolve(block);
             } else {
               reject(new Error("Star could not be submitted."))
@@ -149,8 +149,8 @@ class Blockchain {
         let self = this;
         return new Promise((resolve, reject) => {
           try {
-            const correctBlock = this.chain.filter(block => block.hash === hash);
-            resolve(correctBlock[0]);
+            const correctBlock = self.chain.filter(block => block.hash === hash)[0];
+            resolve(correctBlock);
           } catch(err) {
             reject(new Error(err));
           }
@@ -184,7 +184,15 @@ class Blockchain {
         let self = this;
         let stars = [];
         return new Promise((resolve, reject) => {
-
+          try {
+            const correctBlocks = self.chain.filter(block => block.data["owner"] === address);
+            for (let x = 0; x < correctBlocks.length; x++) {
+              stars.push(correctBlocks[x].data["star"]);
+            }
+            resolve(stars);
+          } catch (err) {
+            reject(new Error(err));
+          }
         });
     }
 
