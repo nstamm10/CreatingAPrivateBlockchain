@@ -136,8 +136,6 @@ class Blockchain {
             } else {
               reject(new Error("Star could not be submitted."))
             }
-  
-
         });
     }
 
@@ -150,7 +148,12 @@ class Blockchain {
     getBlockByHash(hash) {
         let self = this;
         return new Promise((resolve, reject) => {
-
+          try {
+            const correctBlock = this.chain.filter(block => block.hash === hash);
+            resolve(correctBlock[0]);
+          } catch(err) {
+            reject(new Error(err));
+          }
         });
     }
 
