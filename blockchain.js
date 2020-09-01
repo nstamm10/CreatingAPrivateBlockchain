@@ -183,16 +183,14 @@ class Blockchain {
     getStarsByWalletAddress (address) {
         let self = this;
         let stars = [];
-        return new Promise((resolve, reject) => {
-          try {
-            const correctBlocks = self.chain.filter(block => block.data["owner"] === address);
-            for (let x = 0; x < correctBlocks.length; x++) {
-              stars.push(correctBlocks[x].data["star"]);
-            }
+        return new Promise( async(resolve, reject) => {
+            self.chain.forEach((block) => {
+              let data = await block.getBData();
+              if (data.owner === address){
+                stars.push(data.star);
+              }
+            });
             resolve(stars);
-          } catch (err) {
-            reject(new Error(err));
-          }
         });
     }
 
