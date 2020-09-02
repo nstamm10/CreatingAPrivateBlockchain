@@ -212,7 +212,7 @@ class Blockchain {
             } else {
               block.validate() ? true :
               errorLog.push('Block ${block.height} does not validate');
-              block.previousBlockHash === self.chain[block.height - 1] ? true :
+              block.previousBlockHash === self.chain[block.height - 1].hash ? true :
               errorLog.push('Block ${block.height} previous hash does not validate');
             }
           });
