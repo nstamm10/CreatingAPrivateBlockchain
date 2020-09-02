@@ -1,11 +1,11 @@
 /**
  *                          Block class
- *  The Block class is a main component into any Blockchain platform, 
+ *  The Block class is a main component into any Blockchain platform,
  *  it will store the data and act as a dataset for your application.
  *  The class will expose a method to validate the data... The body of
  *  the block will contain an Object that contain the data to be stored,
  *  the data should be stored encoded.
- *  All the exposed methods should return a Promise to allow all the methods 
+ *  All the exposed methods should return a Promise to allow all the methods
  *  run asynchronous.
  */
 
@@ -22,7 +22,7 @@ class Block {
 		this.time = 0;                                              // Timestamp for the Block creation
 		this.previousBlockHash = null;                              // Reference to the previous Block Hash
     }
-    
+
     /**
      *  validate() method will validate if the block has been tampered or not.
      *  Been tampered means that someone from outside the application tried to change
@@ -38,13 +38,20 @@ class Block {
     validate() {
         let self = this;
         return new Promise((resolve, reject) => {
-            // Save in auxiliary variable the current block hash
-                                            
-            // Recalculate the hash of the Block
-            // Comparing if the hashes changed
-            // Returning the Block is not valid
-            
-            // Returning the Block is valid
+            try {
+                // Save in auxiliary variable the current block hash
+                const currentHash = self.hash;
+                self.hash = null;
+                // Recalculate the hash of the Block from all block data besiders the currentHash
+                const newHash = SHA256(JSON.stringify(self)).toString();
+                self.hash = currentHash;
+                // Comparing if the hashes changed
+								// returns true if hash has not changed and block is valid
+								// returns false if hash has changed and block is not valid
+                resolve (currentHash === newHash);
+            } catch(err) {
+                reject(new Error(err));
+            }
 
         });
     }
@@ -52,18 +59,31 @@ class Block {
     /**
      *  Auxiliary Method to return the block body (decoding the data)
      *  Steps:
-     *  
+     *
      *  1. Use hex2ascii module to decode the data
      *  2. Because data is a javascript object use JSON.parse(string) to get the Javascript Object
-     *  3. Resolve with the data and make sure that you don't need to return the data for the `genesis block` 
+     *  3. Resolve with the data and make sure that you don't need to return the data for the `genesis block`
      *     or Reject with an error.
      */
     getBData() {
-        // Getting the encoded data saved in the Block
-        // Decoding the data to retrieve the JSON representation of the object
-        // Parse the data to an object to be retrieve.
 
-        // Resolve with the data if the object isn't the Genesis block
+        let self = this;
+        return new Promise((resolve, reject) => {
+
+            // Getting the encoded data saved in the Block
+            const encodedData = self.body;
+            // Decoding the data to retrieve the JSON representation of the object
+            let decodedData = hex2ascii(encodedData);
+            // Parse the data to an object to be retrieve.
+            let object = JSON.parse(decodedData);
+            // Resolve with the data if the object isn't the Genesis block
+            if (self.height != 0) {
+              resolve(object);
+            } else {
+							reject(new Error('Error, this is the Genesis Block'));
+            }
+        });
+
 
     }
 
