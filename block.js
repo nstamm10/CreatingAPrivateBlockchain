@@ -41,18 +41,17 @@ class Block {
             try {
                 // Save in auxiliary variable the current block hash
                 const currentHash = self.hash;
-                self.hash = null
-                // Recalculate the hash of the Block
+                self.hash = null;
+                // Recalculate the hash of the Block from all block data besiders the currentHash
                 const newHash = SHA256(JSON.stringify(self)).toString();
-                self.hash = currentHash
+                self.hash = currentHash;
                 // Comparing if the hashes changed
+								// returns true if hash has not changed and block is valid
+								// returns false if hash has changed and block is not valid
                 resolve (currentHash === newHash);
             } catch(err) {
                 reject(new Error(err));
             }
-            // Returning the Block is not valid
-
-            // Returning the Block is valid
 
         });
     }
