@@ -80,7 +80,7 @@ class Block {
             if (self.height != 0) {
               resolve(object);
             } else {
-							reject(new Error('Error, this is the Genesis Block'));
+				reject(new Error('Error, this is the Genesis Block'));
             }
         });
 
