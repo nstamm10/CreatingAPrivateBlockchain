@@ -68,16 +68,18 @@ class Blockchain {
             try{
                 //setting block to a new block with the data in the body
                 let blockObj = block;
-                //finding the previous block by current chain height
-                const previousBlock = await self.getBlockByHeight(self.height);
-                //assigning hash of previous block to current block
-                blockObj.previousBlockHash = previousBlock.hash;
                 //assign current height
                 blockObj.height = self.height + 1;
                 //assinging time to block
                 blockObj.time = new Date().getTime();
                 //hashing the block using SHA256
                 blockObj.hash = SHA256(JSON.stringify(blockObj)).toString();
+                if (blockObj.height !== 0) {
+                    //finding the previous block by current chain height
+                    const previousBlock = await self.getBlockByHeight(self.height);
+                    //assigning hash of previous block to current block
+                    blockObj.previousBlockHash = previousBlock.hash;
+                }
                 //checking if the block is valid and resolving by pushing
                 this.chain.push(blockObj);
                 this.height = blockObj.height;
