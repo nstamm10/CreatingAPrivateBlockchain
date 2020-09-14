@@ -16,5 +16,14 @@
     "express": "^4.17.1",
     "hex2ascii": "0.0.3",
     "morgan": "^1.10.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nstamm10/CreatingAPrivateBlockchain.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nstamm10/CreatingAPrivateBlockchain/issues"
+  },
+  "homepage": "https://github.com/nstamm10/CreatingAPrivateBlockchain#readme"
 }
