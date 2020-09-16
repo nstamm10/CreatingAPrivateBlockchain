@@ -71,7 +71,7 @@ class Blockchain {
                 //assign current height
                 blockObj.height = self.height + 1;
                 //assinging time to block
-                blockObj.time = new Date().getTime();
+                blockObj.time = parseInt(new Date().getTime().toString().slice(0,-3));
                 //hashing the block using SHA256
                 blockObj.hash = SHA256(JSON.stringify(blockObj)).toString();
                 if (blockObj.height !== 0) {
