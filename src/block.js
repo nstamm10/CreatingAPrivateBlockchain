@@ -68,20 +68,22 @@ class Block {
     getBData() {
 
         let self = this;
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
 
             // Getting the encoded data saved in the Block
             const encodedData = self.body;
             // Decoding the data to retrieve the JSON representation of the object
             let decodedData = hex2ascii(encodedData);
-            // Parse the data to an object to be retrieve.
+            // Parse the data to an object to be retrieve -- its the data named object
             let object = JSON.parse(decodedData);
+
             // Resolve with the data if the object isn't the Genesis block
-            if (self.height > 0) {
-                resolve(object);
-            } else if (self.height === 0){
-            } else {
-                reject(new Error('Star could not be added.'));
+            if (object.height !== 0) {
+              resolve(object);
+            } else if (object.height === 0) {
+							resolve();
+						} else {
+                reject('This is the Genesis Block.');
             }
         });
 
