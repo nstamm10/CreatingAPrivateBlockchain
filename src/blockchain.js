@@ -124,7 +124,7 @@ class Blockchain {
     submitStar(address, message, signature, star) {
         let self = this;
         return new Promise(async (resolve, reject) => {
-            messageTime = parseInt(message.split(":")[1]);
+            let messageTime = parseInt(message.split(":")[1]);
             let currentTime = parseInt(new Date().getTime().toString().slice(0,-3));
 
             //underFiveMin is a boolean variable, true if time elapsed since message is <= 5 minutes (300000 milisecs)
