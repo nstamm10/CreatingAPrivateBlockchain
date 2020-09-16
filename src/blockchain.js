@@ -137,7 +137,7 @@ class Blockchain {
               await this._addBlock(block);
               resolve(block);
             } else {
-              reject(new Error("Star could not be submitted."))
+              reject("Star could not be submitted.")
             }
         });
     }
