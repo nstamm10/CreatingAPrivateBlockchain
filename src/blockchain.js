@@ -133,7 +133,7 @@ class Blockchain {
             let verified = bitcoinMessage.verify(message,address,signature);
 
             if (underFiveMin && verified) {
-              let block = new Block({data: {"star":star, "owner":address}});
+              let block = new BlockClass({data: {"star":star, "owner":address}});
               await this._addBlock(block);
               resolve(block);
             } else {
