@@ -128,7 +128,7 @@ class Blockchain {
             let currentTime = parseInt(new Date().getTime().toString().slice(0,-3));
 
             //underFiveMin is a boolean variable, true if time elapsed since message is <= 5 minutes (300000 milisecs)
-            let underFiveMin = currentTime - messageTime <= 300000;
+            let underFiveMin = currentTime - messageTime <= 300;
             //verified is a boolean that returns true when verified
             let verified = bitcoinMessage.verify(message,address,signature);
 
